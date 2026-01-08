@@ -3,6 +3,8 @@ import pygame
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from logger import log_state
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 
 def main():
@@ -15,12 +17,16 @@ def main():
     # Groups
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
 
-    # Add all future Players to both groups (must be set before Player is created)
+    # Add all future instances to groups
     Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable,)
 
-    # Create player (auto-added to groups by CircleShape)
+    # Create objects
     Player(int(SCREEN_WIDTH / 2), int(SCREEN_HEIGHT / 2))
+    AsteroidField()
 
     while True:
         log_state()
